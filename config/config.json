@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "labava_user",
+    "password": "l4b4v4s3cr3t",
+    "database": "labava_db",
+    "host": "10.0.2.32",
+    "dialect": "postgres",
+    "port": "5433"
+  },
+  "test": {
+    "username": "labava_user",
+    "password": "l4b4v4s3cr3t",
+    "database": "labava_db",
+    "host": "10.0.2.32",
+    "dialect": "postgres",
+    "port": "5433"
+  },
+  "production": {
+    "username": "labava_user",
+    "password": "l4b4v4s3cr3t",
+    "database": "labava_db",
+    "host": "10.0.2.32",
+    "dialect": "postgres",
+    "port": "5433"
+  }
+}
