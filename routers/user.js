@@ -10,6 +10,7 @@ router.put("/update-role/:id", userController.updateUserRole);
 
 
 router.post("/role", roleController.create);
+router.get("/role", roleController.read);
 router.put("/role/:id", roleController.update);
 router.delete("/role/:id", roleController.delete);
 

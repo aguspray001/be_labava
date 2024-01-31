@@ -35,11 +35,27 @@ module.exports = {
   },
 
   read: async (req, res) => {
-    const { role_id } = req.body;
-    // check user in database
-    // if user exist
-    // password validation
-    // then return token
+    try {
+      // check user in database
+      const roles = await Role.findAll();
+
+      if (roles !== null) {
+        res.status(200).send({
+          data: roles,
+          message: "Successfully fetch roles from database",
+          status: 200,
+        });
+      } else {
+        throw new Error("Error fetch roles data from database");
+      }
+    } catch (e) {
+      res.status(400).send({
+        data: null,
+        message: e.message,
+        stack: e.stack,
+        status: 400,
+      });
+    }
   },
 
   update: async (req, res) => {
@@ -55,15 +71,14 @@ module.exports = {
       if (!role) {
         throw new Error("Role was not found");
       } else {
-        const resp = await Role.update(data, {where:{id}});
+        const resp = await Role.update(data, { where: { id } });
         res.status(200).send({
           data: resp,
           message: "Role has been successfuly updated to database",
           status: 200,
         });
       }
-    } 
-    catch (e) {
+    } catch (e) {
       res.status(500).send({
         data: null,
         message: e.message,
