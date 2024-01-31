@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'role_id',
         as: 'role'
       })
+
+      User.belongsTo(models.Prodi, {
+        foreignKey: 'prodi_id',
+        as: 'prodi'
+      })
     }
   }
   User.init({

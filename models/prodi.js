@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Prodi.hasOne(models.User, {
+        foreignKey: "prodi_id",
+        as: "user"
+      })
     }
   }
   Prodi.init({
