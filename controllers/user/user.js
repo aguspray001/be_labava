@@ -2,7 +2,7 @@ const { Sequelize } = require("../../models");
 const Op = Sequelize.Op;
 const User = require("../../models").User;
 const Role = require("../../models").Role;
-
+const Prodi = require("../../models").Prodi;
 
 const { sign } = require("../../helper/jwt");
 const { pagination } = require("../../helper/pagination");
@@ -100,6 +100,10 @@ module.exports = {
           // nested include
         //   include : [{model: User, as: 'user', attributes: ["name", "phone_number"]}]
         },
+        {
+          model: Prodi,
+          as: "prodi"
+        }
       ],
       order: [["createdAt", "DESC"]],
       limit,
