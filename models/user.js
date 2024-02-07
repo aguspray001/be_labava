@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'prodi_id',
         as: 'prodi'
       })
+
+      User.belongsTo(models.UserStatus, {
+        foreignKey: 'status',
+        as: 'status'
+      })
     }
   }
   User.init({
