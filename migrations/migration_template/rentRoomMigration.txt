@@ -1,7 +1,6 @@
-npx sequelize-cli model:generate --name User --attributes username:string,email:string,phone_number:string,password:string,role_id:integer,status:integer,nim:integer,prodi_id:integer
+npx sequelize-cli model:generate --name RentRoomTransaction --attributes room_id:integer,user_id:integer,rent_date:string,return_data:string,pupose:string,dosen_pengampu:string,activity:string,organization:string,accepted_status_id:integer
 
-npx sequelize-cli model:generate --name Role --attributes role_name:string,role_number:integer
-npx sequelize-cli model:generate --name UserStatus --attributes status_name:string,status_number:integer
-npx sequelize-cli model:generate --name Prodi --attributes prodi_name:string,prodi_number:integer
+npx sequelize-cli model:generate --name Room --attributes room_name:string,room_number:integer
+npx sequelize-cli model:generate --name AcceptedStatus --attributes status_name:string,status_number:integer
 
 npx sequelize-cli db:migrate
