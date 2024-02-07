@@ -3,11 +3,14 @@ const userController = require("../controllers/user/user");
 const roleController = require("../controllers/user/role");
 const prodiController = require("../controllers/user/prodi");
 const statusController = require("../controllers/user/status");
+const otpController = require("../controllers/user/otp");
 
+// user router
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.get("/", userController.listUser);
 router.put("/update-role/:id", userController.updateUserRole);
+router.put("/verification/:id", userController.verifiedStatus);
 
 // role router
 router.post("/role", roleController.create);
@@ -26,5 +29,10 @@ router.post("/status", statusController.create);
 router.get("/status", statusController.read);
 router.put("/status/:id", statusController.update);
 router.delete("/status/:id", statusController.delete);
+
+// otp router
+router.post("/otp", otpController.create);
+router.put("/otp/:id", otpController.update);
+router.delete("/otp/:id", otpController.delete);
 
 module.exports = router;
