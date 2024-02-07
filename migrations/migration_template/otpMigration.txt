@@ -1,0 +1,3 @@
+npx sequelize-cli model:generate --name otpUser --attributes otp_code:string,hashed_otp:string,user_id:integer
+
+npx sequelize-cli db:migrate
