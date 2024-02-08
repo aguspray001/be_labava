@@ -15,8 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   otpUser.init({
     otp_code: DataTypes.STRING,
-    hashed_otp: DataTypes.STRING,
-    user_id: DataTypes.INTEGER
+    hashed_otp: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'otpUser',

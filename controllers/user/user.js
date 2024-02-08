@@ -7,10 +7,15 @@ const otpUser = require("../../models").otpUser;
 
 const { sign } = require("../../helper/jwt");
 const { pagination } = require("../../helper/pagination");
-const { saltPassword, hashPasswordComparation } = require("../../helper/bcrypt");
+const {
+  saltPassword,
+  hashPasswordComparation,
+} = require("../../helper/bcrypt");
+const { sendEmail } = require("../../helper/email");
+
+const otpGenerator = require("otp-generator");
 
 module.exports = {
-
   register: async (req, res) => {
     try {
       const {
@@ -19,7 +24,7 @@ module.exports = {
         phone_number,
         password,
         role_id,
-        NIM,
+        nim,
         prodi_id,
       } = req.body;
 
@@ -29,9 +34,10 @@ module.exports = {
         phone_number,
         password: saltPassword(password, 10),
         role_id,
-        status: 0,
-        NIM,
+        status: 2,
+        nim,
         prodi_id,
+        otp_id: null
       };
 
       // check user in database
@@ -43,12 +49,11 @@ module.exports = {
       // if user didnt exist then create it
       if (!user) {
         const resp = await User.create(data);
-        // send email verification with generated otp code
-
         res.status(200).send({
           data: resp,
           status: 200,
-          message: "Registration is success, please check your email to verify your registration process",
+          message:
+            "Registration is success",
         });
       } else {
         throw new Error("Email has been registered");
@@ -57,6 +62,50 @@ module.exports = {
       res.status(500).send(e.message);
     }
   },
+
+  // register: async (req, res) => {
+  //   const { username, email, phone_number, password, role_id, NIM, prodi_id } =
+  //     req.body;
+
+  //   const data = {
+  //     username,
+  //     email,
+  //     phone_number,
+  //     password: saltPassword(password, 10),
+  //     role_id,
+  //     status: 2,
+  //     NIM,
+  //     prodi_id,
+  //   };
+
+  //   const generatedOTP = otpGenerator.generate(6, {
+  //     upperCaseAlphabets: false,
+  //     specialChars: false,
+  //   });
+
+  //   const mailOptions = {
+  //     from:"Agus Prayudi",
+  //     to: email,
+  //     subject: `OTP Nodemailer - ${generatedOTP}`,
+  //     text: generatedOTP,
+  //     // html: "<button>Verify your OTP</button>",
+  //   };
+
+  //   // check otp_code in database
+  //   const otp = await otpUser.findOne({
+  //     where: {
+  //       otp_code: { [Op.eq]: generatedOTP },
+  //     },
+  //   });
+
+  //   const emailResp = sendEmail(mailOptions);
+  //   res.status(200).send({
+  //     data: emailResp,
+  //     status: 200,
+  //     message:
+  //       "Registration is success, please check your email to verify your registration process",
+  //   });
+  // },
 
   login: async (req, res) => {
     try {
@@ -99,33 +148,35 @@ module.exports = {
         {
           model: Role,
           as: "role",
-        //   attributes: ["name", "sex", "born_date", "id"],
+          //   attributes: ["name", "sex", "born_date", "id"],
           // nested include
-        //   include : [{model: User, as: 'user', attributes: ["name", "phone_number"]}]
+          //   include : [{model: User, as: 'user', attributes: ["name", "phone_number"]}]
         },
         {
           model: Prodi,
-          as: "prodi"
-        }
+          as: "prodi",
+        },
       ],
       order: [["createdAt", "DESC"]],
       limit,
       offset,
-    }).then((r) => {
-      res.send({
-        data: { ...r, total_data: r.rows.length },
-        status: 200,
-        message: "Success get list users data",
-      });
-    }).catch((e)=>{
-        res.status(500).json({ data: null, message: e.message, status: 500 });
     })
+      .then((r) => {
+        res.send({
+          data: { ...r, total_data: r.rows.length },
+          status: 200,
+          message: "Success get list users data",
+        });
+      })
+      .catch((e) => {
+        res.status(500).json({ data: null, message: e.message, status: 500 });
+      });
   },
 
   updateUserRole: async (req, res) => {
     try {
       const { id } = req.params;
-      console.log(id)
+      console.log(id);
       const { role_number } = req.body;
       const data = { role_id: role_number };
 
@@ -134,15 +185,14 @@ module.exports = {
       if (!user) {
         throw new Error("User was not found");
       } else {
-        const resp = await User.update(data, {where:{id}});
+        const resp = await User.update(data, { where: { id } });
         res.status(200).send({
           data: resp,
           message: "User Role has been successfuly updated to database",
           status: 200,
         });
       }
-    } 
-    catch (e) {
+    } catch (e) {
       res.status(500).send({
         data: null,
         message: e.message,
@@ -164,16 +214,16 @@ module.exports = {
       if (otp) {
         // find user
         const user = await User.findByPk(user_id);
-        if(user){
-          const data = {status: 1}; //status verified
-          const resp = await User.update({data}, {where: id});
-  
+        if (user) {
+          const data = { status: 1 }; //status verified
+          const resp = await User.update({ data }, { where: id });
+
           res.status(200).send({
             data: resp,
             message: "Successfully verify user status using OTP Code",
             status: 200,
           });
-        }else{
+        } else {
           throw new Error("User not found from database");
         }
       } else {

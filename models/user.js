@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 
       User.belongsTo(models.UserStatus, {
         foreignKey: 'status',
-        as: 'status'
+        as: 'status_id'
       })
 
       User.hasOne(models.RentRoomTransaction, {
@@ -40,7 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     role_id: DataTypes.INTEGER,
     status: DataTypes.INTEGER,
     nim: DataTypes.INTEGER,
-    prodi_id: DataTypes.INTEGER
+    prodi_id: DataTypes.INTEGER,
+    otp_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',
