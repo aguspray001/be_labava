@@ -4,13 +4,14 @@ const roleController = require("../controllers/user/role");
 const prodiController = require("../controllers/user/prodi");
 const statusController = require("../controllers/user/status");
 const otpController = require("../controllers/user/otp");
+const { jwtAuthMiddleware } = require("../middlewares/auth");
 
 // user router
 router.post("/register", userController.register);
 router.post("/login", userController.login);
-router.get("/", userController.listUser);
-router.put("/update-role/:id", userController.updateUserRole);
-router.put("/verification/:id", userController.verifiedStatus);
+router.get("/", [jwtAuthMiddleware], userController.listUser);
+router.put("/update-role/:id", [jwtAuthMiddleware], userController.updateUserRole);
+router.put("/verification/:id", [jwtAuthMiddleware], userController.verifiedStatus);
 
 // role router
 router.post("/role", roleController.create);
