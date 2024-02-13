@@ -11,9 +11,10 @@ const {
   saltPassword,
   hashPasswordComparation,
 } = require("../../helper/bcrypt");
-const { sendEmail } = require("../../helper/email");
+const { ErrorHandler } = require("../../helper/error");
+const { BAD_REQUEST } = require("../../constants/errorConstant");
 
-const otpGenerator = require("otp-generator");
+
 
 module.exports = {
   register: async (req, res) => {
@@ -63,7 +64,7 @@ module.exports = {
     }
   },
 
-  login: async (req, res) => {
+  login: async (req, res, next) => {
     try {
       const { email, password } = req.body;
       // check user in database
@@ -86,11 +87,14 @@ module.exports = {
             .status(200)
             .json({ data: token, message: "Login is success", status: 200 });
         } else {
-          throw new Error("User is not registered yet");
+          console.log("tes")
+          throw new ErrorHandler("Your password is wrong", BAD_REQUEST, false);
         }
+      }else{
+        throw new ErrorHandler("User is not registered yet", BAD_REQUEST, false);
       }
     } catch (e) {
-      res.status(400).json({ data: null, message: e.message, status: 400 });
+      next(e);
     }
   },
 
