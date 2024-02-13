@@ -63,50 +63,6 @@ module.exports = {
     }
   },
 
-  // register: async (req, res) => {
-  //   const { username, email, phone_number, password, role_id, NIM, prodi_id } =
-  //     req.body;
-
-  //   const data = {
-  //     username,
-  //     email,
-  //     phone_number,
-  //     password: saltPassword(password, 10),
-  //     role_id,
-  //     status: 2,
-  //     NIM,
-  //     prodi_id,
-  //   };
-
-  //   const generatedOTP = otpGenerator.generate(6, {
-  //     upperCaseAlphabets: false,
-  //     specialChars: false,
-  //   });
-
-  //   const mailOptions = {
-  //     from:"Agus Prayudi",
-  //     to: email,
-  //     subject: `OTP Nodemailer - ${generatedOTP}`,
-  //     text: generatedOTP,
-  //     // html: "<button>Verify your OTP</button>",
-  //   };
-
-  //   // check otp_code in database
-  //   const otp = await otpUser.findOne({
-  //     where: {
-  //       otp_code: { [Op.eq]: generatedOTP },
-  //     },
-  //   });
-
-  //   const emailResp = sendEmail(mailOptions);
-  //   res.status(200).send({
-  //     data: emailResp,
-  //     status: 200,
-  //     message:
-  //       "Registration is success, please check your email to verify your registration process",
-  //   });
-  // },
-
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -134,7 +90,7 @@ module.exports = {
         }
       }
     } catch (e) {
-      res.status(500).json({ data: null, message: e.message, status: 500 });
+      res.status(400).json({ data: null, message: e.message, status: 400 });
     }
   },
 
