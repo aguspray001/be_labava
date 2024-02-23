@@ -133,7 +133,7 @@ module.exports = {
         res.send({
           data: { ...r, total_data: r.rows.length },
           status: 200,
-          message: "Success get list users data",
+          message: "Success get list rent stuff data",
         });
       })
       .catch((e) => {

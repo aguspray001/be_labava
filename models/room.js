@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Room.hasOne(models.RentRoomTransaction, {
         foreignKey: 'room_id',
-        as: 'rent_room_transaction'
+        as: 'room',
+        targetKey: "room_number"
       })
     }
   }

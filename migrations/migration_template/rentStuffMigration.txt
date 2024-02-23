@@ -2,4 +2,6 @@ npx sequelize-cli model:generate --name RentStuffTransaction --attributes stuff_
 
 npx sequelize-cli model:generate --name Stuff --attributes name:string,buy_date:string,owner_id:integer,current_condition:integer,status:integer,total:integer,inventaris_code:string
 
+
+npx sequelize-cli model:generate --name StuffCategory --attributes name:string,total:integer
 npx sequelize-cli db:migrate

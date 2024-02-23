@@ -7,6 +7,7 @@ const dotenv = require("dotenv").config();
 const userRouter = require("./routers/user");
 const roomRouter = require("./routers/room");
 const stuffRouter = require("./routers/stuff");
+const accRouter = require("./routers/acc");
 
 const { errorHandlerMiddleware } = require("./helper/error");
 
@@ -23,6 +24,7 @@ apiVersion = "/api/v1/"
 app.use(apiVersion+"user", userRouter);
 app.use(apiVersion+"room", roomRouter);
 app.use(apiVersion+"stuff", stuffRouter);
+app.use(apiVersion+"acc", accRouter);
 
 app.use(errorHandlerMiddleware);
 

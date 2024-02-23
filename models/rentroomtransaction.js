@@ -13,12 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       RentRoomTransaction.belongsTo(models.Room, {
         foreignKey: 'room_id',
-        as: 'room'
+        as: 'room',
+        targetKey: "room_number"
       })
 
       RentRoomTransaction.belongsTo(models.AcceptedStatus, {
         foreignKey: 'accepted_status_id',
-        as: 'accepted_status'
+        as: 'acc_status'
       })
 
       RentRoomTransaction.belongsTo(models.User, {
@@ -31,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     room_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     rent_date: DataTypes.STRING,
-    return_data: DataTypes.STRING,
+    return_date: DataTypes.STRING,
     pupose: DataTypes.STRING,
     dosen_pengampu: DataTypes.STRING,
     activity: DataTypes.STRING,
