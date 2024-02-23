@@ -9,8 +9,8 @@ router.get("/rents/", stuffRentController.paging);
 router.put("/rent/:id", stuffRentController.update);
 
 // accepted-status router
-router.post("/acc/", stuffRentController.accTransaction);
-router.post("/reject/", stuffRentController.rejectTransaction);
+router.post("/acc/:id", stuffRentController.accTransaction);
+router.post("/reject/:id", stuffRentController.rejectTransaction);
 
 // room router
 router.post("/", stuffController.create);
