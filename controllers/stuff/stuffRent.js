@@ -123,7 +123,6 @@ module.exports = {
       req.query.currentPage,
       req.query.limit
     );
-    console.log(limit, offset);
 
     RentStuffTransaction.findAndCountAll({
       order: [["createdAt", "DESC"]],
@@ -240,7 +239,7 @@ module.exports = {
 
       res.status(200).send({
         data: null,
-        message: `${roleMessage(role_number)} Laboran to ACC transaction`,
+        message: `${roleMessage(role_number)} Success to ACC transaction`,
         status: 200,
       });
     } catch (e) {
