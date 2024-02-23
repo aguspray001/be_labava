@@ -1,0 +1,5 @@
+npx sequelize-cli model:generate --name RentStuffTransaction --attributes stuff_id:integer,user_id:integer,rent_date:string,return_date:string,pupose:string,dosen_pengampu:string,activity:string,organization:string,accepted_status_id:integer,rent_condition_id:integer
+
+npx sequelize-cli model:generate --name Stuff --attributes name:string,buy_date:string,owner_id:integer,current_condition:integer,status:integer,total:integer,inventaris_code:string
+
+npx sequelize-cli db:migrate
