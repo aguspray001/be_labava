@@ -86,11 +86,11 @@ module.exports = {
         throw new ErrorHandler("Error get list of stuff data", 400, false);
       }
     } catch (e) {
-      console.log(e);
+      next(e);
     }
   },
 
-  update: async (req, res) => {
+  update: async (req, res, next) => {
     try {
       const { id } = req.params;
 
